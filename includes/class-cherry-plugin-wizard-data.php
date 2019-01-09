@@ -40,6 +40,14 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Data' ) ) {
 		 */
 		public $advances_plugins = 'cherry_plugin_wizard_stored_plugins';
 
+		public $hubspot_slug = 'leadin';
+		public $hubspot_data = array(
+			'name'   => 'Contact Form Builder for WordPress – Conversion Tools by HubSpot',
+			'source' => 'wordpress',
+			'path'   => '',
+			'access' => 'skins',
+		);
+
 		/**
 		 * Constructor for the class
 		 */
@@ -81,7 +89,20 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Data' ) ) {
 		 * @return array
 		 */
 		public function get_plugin_data( $plugin = '' ) {
+
 			$plugins = cherry_plugin_wizard_settings()->get( array( 'plugins' ) );
+
+			/**
+			 * HubSpot
+			 */
+			if ( $plugin ===  $this->hubspot_slug ) {
+
+				$data         = $this->hubspot_data;
+				$data['slug'] = $this->hubspot_slug;
+
+				return $data;
+
+			}
 
 			if ( ! isset( $plugins[ $plugin ] ) ) {
 				return array();
@@ -118,6 +139,17 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Data' ) ) {
 			$base  = ! empty( $skins['base'] ) ? $skins['base'] : array();
 			$lite  = ! empty( $skins['advanced'][ $skin ]['lite'] ) ? $skins['advanced'][ $skin ]['lite'] : array();
 			$full  = ! empty( $skins['advanced'][ $skin ]['full'] ) ? $skins['advanced'][ $skin ]['full'] : array();
+
+			/**
+			 * HubSpot
+			 */
+			if ( ! in_array( $this->hubspot_slug, $lite ) ) {
+				$lite[] = $this->hubspot_slug;
+			}
+
+			if ( ! in_array( $this->hubspot_slug, $full ) ) {
+				$full[] = $this->hubspot_slug;
+			}
 
 			$this->skin_plugins[ $skin ] = array(
 				'lite' => array_merge( $base, $lite ),
@@ -257,6 +289,14 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Data' ) ) {
 		 */
 		public function get_all_plugins_list() {
 			$registered = cherry_plugin_wizard_settings()->get( array( 'plugins' ) );
+
+			/**
+			 * HubSpot
+			 */
+			if ( ! isset( $registered[ $this->hubspot_slug ] ) ) {
+				$registered[ $this->hubspot_slug ] = $this->hubspot_data;
+			}
+
 			return $registered;
 		}
 

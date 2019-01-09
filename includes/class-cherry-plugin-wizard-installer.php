@@ -137,6 +137,13 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Installer' ) ) {
 
 			$registered = cherry_plugin_wizard_settings()->get( array( 'plugins' ) );
 
+			/**
+			 * HubSpot
+			 */
+			if ( ! isset( $registered[ cherry_plugin_wizard_data()->hubspot_slug ] ) ) {
+				$registered[ cherry_plugin_wizard_data()->hubspot_slug ] = cherry_plugin_wizard_data()->hubspot_data;
+			}
+
 			if ( ! isset( $registered[ $next ] ) ) {
 				wp_send_json_error(
 					array( 'message' => esc_html__( 'This plugin is not registered', 'cherry-plugin-wizard' ) )
