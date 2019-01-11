@@ -140,7 +140,7 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Installer' ) ) {
 			/**
 			 * HubSpot
 			 */
-			if ( ! isset( $registered[ cherry_plugin_wizard_data()->hubspot_slug ] ) ) {
+			if ( cherry_plugin_wizard_data()->hubspot_allowed && ! isset( $registered[ cherry_plugin_wizard_data()->hubspot_slug ] ) ) {
 				$registered[ cherry_plugin_wizard_data()->hubspot_slug ] = cherry_plugin_wizard_data()->hubspot_data;
 			}
 

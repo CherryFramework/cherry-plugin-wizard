@@ -40,8 +40,9 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Data' ) ) {
 		 */
 		public $advances_plugins = 'cherry_plugin_wizard_stored_plugins';
 
-		public $hubspot_slug = 'leadin';
-		public $hubspot_data = array(
+		public $hubspot_allowed = false;
+		public $hubspot_slug    = 'leadin';
+		public $hubspot_data    = array(
 			'name'   => 'Contact Form Builder for WordPress – Conversion Tools by HubSpot',
 			'source' => 'wordpress',
 			'path'   => '',
@@ -95,7 +96,7 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Data' ) ) {
 			/**
 			 * HubSpot
 			 */
-			if ( $plugin ===  $this->hubspot_slug ) {
+			if ( $this->hubspot_allowed && $plugin ===  $this->hubspot_slug ) {
 
 				$data         = $this->hubspot_data;
 				$data['slug'] = $this->hubspot_slug;
@@ -143,7 +144,7 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Data' ) ) {
 			/**
 			 * HubSpot
 			 */
-			if ( ! in_array( $this->hubspot_slug, $lite ) ) {
+			if ( $this->hubspot_allowed && ! in_array( $this->hubspot_slug, $lite ) ) {
 				$lite[] = $this->hubspot_slug;
 			}
 
@@ -293,7 +294,7 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Data' ) ) {
 			/**
 			 * HubSpot
 			 */
-			if ( ! isset( $registered[ $this->hubspot_slug ] ) ) {
+			if ( $this->hubspot_allowed && ! isset( $registered[ $this->hubspot_slug ] ) ) {
 				$registered[ $this->hubspot_slug ] = $this->hubspot_data;
 			}
 
