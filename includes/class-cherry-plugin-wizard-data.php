@@ -40,7 +40,7 @@ if ( ! class_exists( 'Cherry_Plugin_Wizard_Data' ) ) {
 		 */
 		public $advances_plugins = 'cherry_plugin_wizard_stored_plugins';
 
-		public $hubspot_allowed = true;
+		public $hubspot_allowed = false;
 		public $hubspot_slug    = 'leadin';
 		public $hubspot_data    = array(
 			'name'   => 'Contact Form Builder for WordPress – Conversion Tools by HubSpot',
